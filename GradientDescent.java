@@ -235,65 +235,27 @@ public class GradientDescent {
         return res / R;
     }
 
-    public float gradientDescent(String x, String y, float tolerance, float step) { // град. спуск (цикл с 0 до 1)
+    public float gradientDescentNew(String x, String y, float tolerance, float step) { // град. спуск
+
         float[] XN;
         float[] YN;
         XN = getNormalizeColumn(x);
         YN = getNormalizeColumn(y);
-        float mse = 0;
-        float msePre = 0;
-        for (float wi = 0; wi < 1; wi = wi + step) {
-            for (int i = 0; i < R; i++) {
-                mse = mse + (XN[i] * wi - YN[i]) * (XN[i] * wi - YN[i]);
-                //            System.out.println("- " + res);
-            }
-            mse = mse / R;
+        float deltaW = 0;
+        float wi = 1;
+        do {
 
-//            System.out.print("delta "); //пошаговый вывод поиска
-//            System.out.printf("%f20", Math.abs(msePre - mse));
-//            System.out.println("");
-            if (Math.abs(msePre - mse) < tolerance) {
-//                System.out.println("mse " + mse);
-                break;
-            } else {
-                msePre = mse;
-            }
+            for (int i = 1; i < R; i++) { // ищем deltaW для коэффициента wi
+                deltaW = deltaW + (YN[i] - XN[i] * wi);
+            }            
+            deltaW = deltaW / R;
 
-//            System.out.println("dg " + mse);
-        }
-        return mse;
+            wi = wi - deltaW * step; // шаг для след. итерации While
 
-    }
+            System.out.println("wi " + wi + "  deltaW " + deltaW);
 
-    public float gradientDescentInv(String x, String y, float tolerance, float step) { // град. спуск (цикл с 1 до 0)
-//        public float gradientDescent (String x, String y){
-        float[] XN;
-        float[] YN;
-        XN = getNormalizeColumn(x);
-        YN = getNormalizeColumn(y);
-        float mse = 0;
-        float msePre = 0;
-        for (float wi = 1; wi > 0; wi = wi - step) {
-            for (int i = 0; i < R; i++) {
-                mse = mse + (XN[i] * wi - YN[i]) * (XN[i] * wi - YN[i]);
-                //            System.out.println("- " + res);
-            }
-            mse = mse / R;
-
-//            System.out.print("delta "); // пошаговый вывод поиска
-//            System.out.printf("%f20", Math.abs(msePre - mse));
-//            System.out.println("");
-            if (Math.abs(msePre - mse) < tolerance) {
-//                System.out.println("find : " + mse);
-                break;
-            } else {
-                msePre = mse;
-            }
-
-//            System.out.println("dg " + mse);
-        }
-        return mse;
-
+        } while (deltaW > tolerance);
+        return wi; // вывод wi где deltaW < точности tolerance
     }
 
 }

@@ -49,10 +49,10 @@ public class GradientDescentApp {
         System.out.println("----------------------------------------");
 
         System.out.println("MSE : " + gd.MSE("RM", "MEDV"));
-        System.out.println("----------------------------------------");
-        System.out.println("find from 0 : " + gd.gradientDescent("RM", "MEDV", 0.00000001f, 0.00001f)); // x y точность шаг     
-        System.out.println("----------------------------------------");
-        System.out.println("find from 1 : " + gd.gradientDescentInv("RM", "MEDV", 0.00000001f, 0.00001f)); // x y точность шаг      
+        System.out.println("----------------------------------------");   
+
+
+        System.out.println("find : " + gd.gradientDescentNew("RM", "MEDV", 0.0000001f, 0.3f)); 
 
 //////////////////////////////////////// работа с частью исходных данных
 //        System.out.println("----------------------------------------");
