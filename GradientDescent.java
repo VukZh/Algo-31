@@ -241,20 +241,31 @@ public class GradientDescent {
         float[] YN;
         XN = getNormalizeColumn(x);
         YN = getNormalizeColumn(y);
-        float deltaW = 0;
+        float deltaW;
         float wi = 1;
+        float wiPre = 1; // предыдущее wi
+        int iter = 0; // итерация для отображения числа шагов
         do {
-
+            
+            deltaW = 0;
             for (int i = 1; i < R; i++) { // ищем deltaW для коэффициента wi
-                deltaW = deltaW + (YN[i] - XN[i] * wi);
+                deltaW = deltaW + (YN[i] - XN[i] * wi)*wi;                
             }            
             deltaW = deltaW / R;
 
             wi = wi - deltaW * step; // шаг для след. итерации While
 
-            System.out.println("wi " + wi + "  deltaW " + deltaW);
+            System.out.println(iter + ": wi " + wi + "  deltaW " + deltaW);
+            
+            iter ++;
+            
+            if (Math.abs(wiPre - wi) < tolerance || (wiPre - wi) < 0) { // выход при небольшой разнице или при смене направления производной
+                break;
+            } else {
+                wiPre = wi;
+            }
 
-        } while (deltaW > tolerance);
+        } while (true);
         return wi; // вывод wi где deltaW < точности tolerance
     }
 

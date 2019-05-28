@@ -52,7 +52,7 @@ public class GradientDescentApp {
         System.out.println("----------------------------------------");   
 
 
-        System.out.println("find : " + gd.gradientDescentNew("RM", "MEDV", 0.0000001f, 0.3f)); 
+        System.out.println("find : " + gd.gradientDescentNew("RM", "MEDV", 0.00000001f, 0.3f)); // step > 6 - не сходится изза большого шага, добавлен выход по условию (wi предыдущее - wi) < 0 - т.е. производная/касательная пошла уже вверх
 
 //////////////////////////////////////// работа с частью исходных данных
 //        System.out.println("----------------------------------------");
